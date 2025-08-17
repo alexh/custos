@@ -18,14 +18,17 @@ class TestCustosAPI:
         if not cls.primary_token or not cls.emergency_token:
             pytest.skip("Tokens not provided. Set CUSTOS_PRIMARY_TOKEN and CUSTOS_EMERGENCY_TOKEN")
     
-    def setup_method(self):
-        """Ensure clean state before each test"""
-        # Unlock server before each test to ensure consistent starting state
-        headers = {
-            'Authorization': f'Bearer {self.emergency_token}',
-            'Content-Type': 'application/json'
-        }
-        requests.post(f"{self.base_url}/unlock", headers=headers)
+    def teardown_method(self):
+        """Clean up after each test - reset to unlocked state"""
+        try:
+            headers = {
+                'Authorization': f'Bearer {self.emergency_token}',
+                'Content-Type': 'application/json'
+            }
+            requests.post(f"{self.base_url}/unlock", headers=headers)
+        except Exception:
+            # Don't fail the test if cleanup fails
+            pass
     
     def test_health_endpoint(self):
         """Test health check endpoint"""
@@ -99,7 +102,7 @@ class TestCustosAPI:
     
     def test_locked_retrieval_fails(self):
         """Test that data retrieval fails when locked"""
-        # First store some data (server starts unlocked due to setup_method)
+        # Store some data while unlocked (previous test cleanup ensures unlocked state)
         headers = {
             'Authorization': f'Bearer {self.primary_token}',
             'Content-Type': 'application/json'
@@ -154,12 +157,20 @@ class TestCustosAPI:
             'Content-Type': 'application/json'
         }
         unlock_response = requests.post(f"{self.base_url}/unlock", headers=headers)
+        if unlock_response.status_code != 200:
+            print(f"Unlock failed: {unlock_response.status_code} - {unlock_response.text}")
         assert unlock_response.status_code == 200
+        
+        # Give the server a moment to process the unlock
+        import time
+        time.sleep(0.1)
         
         # Verify server is unlocked by checking health
         health_response = requests.get(f"{self.base_url}/health")
         assert health_response.status_code == 200
         health_data = health_response.json()
+        if health_data['locked'] != False:
+            print(f"Server still locked after unlock: {health_data}")
         assert health_data['locked'] == False
         
         # Store some new data to verify unlock works
