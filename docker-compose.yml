@@ -1,0 +1,17 @@
+services:
+  custos:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5555:5555"
+    volumes:
+      - custos_data:/opt/custos
+      - custos_tokens:/root
+    environment:
+      - FLASK_ENV=development
+    restart: unless-stopped
+
+volumes:
+  custos_data:
+  custos_tokens:

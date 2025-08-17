@@ -1,0 +1,21 @@
+[project]
+name = "custos"
+version = "0.1.0"
+description = "Secure network token management service"
+requires-python = ">=3.8"
+dependencies = [
+    "Flask==2.3.3",
+    "gunicorn==21.2.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=7.4.3",
+    "requests>=2.31.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
