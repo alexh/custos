@@ -1,6 +1,8 @@
-<div align="center">
+# Custos 🔐
 
-# <img src="guard_white.png" width="40" height="40"> Custos 🔐 <img src="guard_white_reversed.png" width="40" height="40">
+![Custos Banner](banner.png)
+
+<div align="center">
 
 [![Test](https://github.com/alexh/custos/actions/workflows/test.yml/badge.svg)](https://github.com/alexh/custos/actions/workflows/test.yml)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
@@ -8,9 +10,9 @@
 [![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-*A lightweight, secure token management service for distributed systems. Built with Flask and designed for simplicity and security.*
-
 </div>
+
+A lightweight, secure token management service for distributed systems. Built with Flask and designed for simplicity and security.
 
 ## Features
 
@@ -81,6 +83,10 @@ Custos generates secure tokens during setup:
 Tokens are saved to `/root/custos-tokens.txt` during installation.
 
 ## Security
+
+<div align="center">
+<img src="guard_white.png" width="60"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img src="guard_white_reversed.png" width="60">
+</div>
 
 - All tokens are SHA256 hashed before storage
 - Data is stored with restricted file permissions (600)
@@ -183,7 +189,6 @@ MIT License - see LICENSE file for details.
 
 ## Support
 
-- 📖 Documentation: See `/docs` directory
 - 🐛 Issues: GitHub Issues
 - 💬 Discussions: GitHub Discussions
 - 📧 Contact: See GitHub profile
